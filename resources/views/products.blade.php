@@ -22,11 +22,6 @@
                         <label class="form-label fw-bold">Category</label>
                         <select class="form-select" id="categorySelect">
                             <option value="all">All Categories</option>
-                            {{-- <option value="GPU">Graphics Cards</option>
-                            <option value="CPU">Processors</option>
-                            <option value="RAM">Memory (RAM)</option>
-                            <option value="Motherboard">Motherboards</option>
-                            <option value="Peripherals">Peripherals</option> --}}
                             @foreach ($categories as $category)
                                 <option value="{{ $category->name }}">{{ $category->name }}</option>
                             @endforeach
@@ -254,10 +249,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <form method="POST" hidden action="{{ route('CartItem.store') }}" id="add${product.id}">
+                            @csrf
+                            <input type="number" name="product_id" value=${product.id}>
+                            <input type="number" name="quantity" value=1>
+                            </form>
                             <div class="card-footer bg-white border-top-0 d-flex gap-2 pb-3">
-                                <a href="/Product/${product.id}" class="btn btn-sm btn-custom-outline flex-grow-1">View Details</a>
-                                <button class="btn btn-sm btn-custom-primary flex-grow-1" ${!product.inStock ? 'disabled' : ''}>
-                                    <i class="bi bi-cart-plus"></i> Add
+                                <button class="btn btn-sm btn-custom-outline flex-grow-1" onclick="window.location.href='/Product/${product.id}'">
+                                    Details
+                                </button>
+                                <button class="btn btn-sm btn-custom-primary flex-grow-1" ${!product.inStock ? 'disabled' : ''} form="add${product.id}" onclick="submit">
+                                    <i class="bi bi-cart-plus"></i> Add to cart
                                 </button>
                             </div>
                         </div>

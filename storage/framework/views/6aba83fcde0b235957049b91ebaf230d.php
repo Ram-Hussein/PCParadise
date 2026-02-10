@@ -14,7 +14,17 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
                         <label for="loginKey">Please enter your email</label>
-                        <div class="invalid-feedback">Please enter your email or username.</div>
+                        <div class="invalid-feedback">Please enter your email.</div>
+                        <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Password -->
@@ -22,6 +32,16 @@
                         <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
                         <label for="password">Password</label>
                         <div class="invalid-feedback">Please enter your password.</div>
+                        <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <!-- Options -->

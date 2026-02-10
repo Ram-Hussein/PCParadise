@@ -2,7 +2,6 @@
 
 <div class="container py-5">
         <div class="row">
-           
             <!-- Sidebar Navigation -->
             <div class="col-lg-3 mb-4">
                 <div class="settings-nav-card sticky-top" style="top: 100px; z-index: 10;">
@@ -62,7 +61,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Phone Number</label>
-                                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="<?php echo e(Auth::user()->PhoneNumber); ?>">
+                                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="0<?php echo e(Auth::user()->PhoneNumber); ?>">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Country</label>
@@ -161,7 +160,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                                                        <button type="submit" class="btn btn-danger">Confirm Cancelation</button>
                                                     </div>
                                                     </form>
                                                 </div>
@@ -186,15 +185,45 @@
                         <div class="row g-4">
                             <div class="col-12">
                                 <label class="form-label">Current Password</label>
-                                <input type="password" class="form-control" id="update_password_current_password" name="current_password">
+                                <input required type="password" class="form-control" id="update_password_current_password" name="current_password">
+                                <?php $__errorArgs = ['current_password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">New Password</label>
-                                <input type="password" class="form-control" id="update_password_password" name="password">
+                                <input required type="password" class="form-control" id="update_password_password" name="password">
+                                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" id="update_password_password_confirmation" name="password_confirmation">
+                                <input required type="password" class="form-control" id="update_password_password_confirmation" name="password_confirmation">
+                                <?php $__errorArgs = ['password_confirmation'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                         <div class="mt-4 pt-2">
@@ -221,15 +250,71 @@
                                 <div class="row g-3">
                                 <div class="col-3">
                                     <input type="text" id="Name" name="Name" class="form-control" placeholder="Address Name" value="<?php echo e(old('Name')); ?>" required>
+                                    <?php $__errorArgs = ['Name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="col-9">
                                     <input type="text" id="StreetAddress" name="StreetAddress" class="form-control" placeholder="Street Address" value="<?php echo e(old('StreetAddress')); ?>" required>
+                                    <?php $__errorArgs = ['StreetAddress'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
-                                <div class="col-md-6"><input type="text" id="City" name="City" class="form-control" placeholder="City" value="<?php echo e(old('City')); ?>" required></div>
-                                <div class="col-md-3"><input type="text" id="State" name="State" class="form-control" placeholder="State" value="<?php echo e(old('State')); ?>" required></div>
-                                <div class="col-md-3"><input type="number" id="PostalCode" name="PostalCode" class="form-control" placeholder="Postal Code" value="<?php echo e(old('PostalCode')); ?>" required></div>
+                                <div class="col-md-6">
+                                    <input type="text" id="City" name="City" class="form-control" placeholder="City" value="<?php echo e(old('City')); ?>" required>
+                                    <?php $__errorArgs = ['City'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" id="State" name="State" class="form-control" placeholder="State" value="<?php echo e(old('State')); ?>" required>
+                                    <?php $__errorArgs = ['State'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" id="PostalCode" name="PostalCode" class="form-control" placeholder="Postal Code" value="<?php echo e(old('PostalCode')); ?>" required>
+                                    <?php $__errorArgs = ['PostalCode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
                                 <div class="col-12">
-                                    <button onclick="event.preventDefault(); this.closest('form').submit();" class="btn btn-custom-primary btn-sm">Add Address</button>
+                                    <button type="submit" class="btn btn-custom-primary btn-sm">Add Address</button>
                                 </div>
                             </div>
                             </form>
@@ -276,11 +361,71 @@
                                                 <?php echo csrf_field(); ?>
                                                 <?php echo method_field('PUT'); ?>
                                                 <div class="row g-2">
-                                                <div class="col-3"><input type="text" class="form-control form-control-sm" required name="Name" value="<?php echo e($address->Name); ?>"></div>
-                                                <div class="col-9"><input type="text" class="form-control form-control-sm" required name="StreetAddress" value="<?php echo e($address->StreetAddress); ?>"></div>
-                                                <div class="col-md-6"><input type="text" class="form-control form-control-sm" required name="City" value="<?php echo e($address->City); ?>"></div>
-                                                <div class="col-md-3"><input type="text" class="form-control form-control-sm" required name="State" value="<?php echo e($address->State); ?>"></div>
-                                                <div class="col-md-3"><input type="text" class="form-control form-control-sm" required name="PostalCode" value="<?php echo e($address->PostalCode); ?>"></div>
+                                                <div class="col-3">
+                                                    <input type="text" class="form-control form-control-sm" required name="Name" value="<?php echo e($address->Name); ?>">
+                                                    <?php $__errorArgs = ['Name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                                </div>
+                                                <div class="col-9">
+                                                    <input type="text" class="form-control form-control-sm" required name="StreetAddress" value="<?php echo e($address->StreetAddress); ?>">
+                                                    <?php $__errorArgs = ['StreetAddress'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control form-control-sm" required name="City" value="<?php echo e($address->City); ?>">
+                                                    <?php $__errorArgs = ['City'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control form-control-sm" required name="State" value="<?php echo e($address->State); ?>">
+                                                    <?php $__errorArgs = ['State'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control form-control-sm" required name="PostalCode" value="<?php echo e($address->PostalCode); ?>">
+                                                    <?php $__errorArgs = ['PostalCode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-<?php echo e($message); ?></p>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                                </div>
                                                 <div class="col-12 text-end mt-2">
                                                     <button type="submit" class="btn btn-custom-primary btn-sm">Save Changes</button>
                                                 </div>

@@ -22,7 +22,6 @@
                         <label class="form-label fw-bold">Category</label>
                         <select class="form-select" id="categorySelect">
                             <option value="all">All Categories</option>
-                            
                             <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($category->name); ?>"><?php echo e($category->name); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -250,10 +249,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <form method="POST" hidden action="<?php echo e(route('CartItem.store')); ?>" id="add${product.id}">
+                            <?php echo csrf_field(); ?>
+                            <input type="number" name="product_id" value=${product.id}>
+                            <input type="number" name="quantity" value=1>
+                            </form>
                             <div class="card-footer bg-white border-top-0 d-flex gap-2 pb-3">
-                                <a href="/Product/${product.id}" class="btn btn-sm btn-custom-outline flex-grow-1">View Details</a>
-                                <button class="btn btn-sm btn-custom-primary flex-grow-1" ${!product.inStock ? 'disabled' : ''}>
-                                    <i class="bi bi-cart-plus"></i> Add
+                                <button class="btn btn-sm btn-custom-outline flex-grow-1" onclick="window.location.href='/Product/${product.id}'">
+                                    Details
+                                </button>
+                                <button class="btn btn-sm btn-custom-primary flex-grow-1" ${!product.inStock ? 'disabled' : ''} form="add${product.id}" onclick="submit">
+                                    <i class="bi bi-cart-plus"></i> Add to cart
                                 </button>
                             </div>
                         </div>

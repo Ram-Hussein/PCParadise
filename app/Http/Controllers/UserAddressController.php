@@ -15,7 +15,7 @@ class UserAddressController extends Controller
             'StreetAddress'=>'required|string',
             'City'=>'required|string',
             'State'=>'required|string',
-            'PostalCode'=>'required|numeric',
+            'PostalCode'=>'required||min:5|alpha_num',
         ]);
         
         $UserAddress = UserAddress::create([

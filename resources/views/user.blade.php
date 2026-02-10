@@ -3,31 +3,6 @@
 
 <div class="container py-5">
         <div class="row">
-           {{--  <!-- Sidebar Navigation -->
-            <div class="col-lg-3 mb-4">
-                <div class="settings-nav-card sticky-top" style="top: 100px; z-index: 10;">
-                    <div class="p-4 border-bottom bg-light">
-                        <h5 class="mb-0 fw-bold" style="color: var(--primary-purple);">Dashboard</h5>
-                    </div>
-                    <div class="list-group list-group-flush" id="settings-tabs">
-                        <a onclick="showSection('personal-info')" class="list-group-item list-group-item-action active" id="tab-personal-info">
-                            <i class="fas fa-user me-2"></i> Personal Details
-                        </a>
-                        <a onclick="showSection('my-orders')" class="list-group-item list-group-item-action" id="tab-my-orders">
-                            <i class="fas fa-shopping-bag me-2"></i> My Orders
-                        </a>
-                        <a onclick="showSection('security')" class="list-group-item list-group-item-action" id="tab-security">
-                            <i class="fas fa-lock me-2"></i> Security
-                        </a>
-                        <a onclick="showSection('addresses')" class="list-group-item list-group-item-action" id="tab-addresses">
-                            <i class="fas fa-map-marker-alt me-2"></i> Addresses
-                        </a>
-                        <a onclick="showSection('danger-zone')" class="list-group-item list-group-item-action text-danger" id="tab-danger-zone">
-                            <i class="fas fa-exclamation-triangle me-2"></i> Delete Account
-                        </a>
-                    </div>
-                </div>
-            </div> --}}
             <!-- Sidebar Navigation -->
             <div class="col-lg-3 mb-4">
                 <div class="settings-nav-card sticky-top" style="top: 100px; z-index: 10;">
@@ -63,31 +38,34 @@
                     <form method="POST" action="{{ route('profile.update') }}">
                         @csrf
                         @method('PATCH')
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{$error}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <label class="form-label">First Name</label>
                                 <input type="text" class="form-control" id="fname" name="fname" value="{{ Auth::user()->fname }}">
+                                    @error('fname')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Last Name</label>
                                 <input type="text" class="form-control" id="lname" name="lname" value="{{ Auth::user()->lname }}">
+                                    @error('lname')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Email Address</label>
                                 <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email }}">
+                                    @error('email')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Phone Number</label>
-                                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="{{ Auth::user()->PhoneNumber }}">
+                                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="0{{ Auth::user()->PhoneNumber }}">
+                                    @error('PhoneNumber')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Country</label>
@@ -101,6 +79,9 @@
                             <div class="col-md-6">
                                 <label class="form-label">Date of Birth</label>
                                 <input type="date" class="form-control" id="dob" name="dob" value="{{ Auth::user()->date_of_birth }}">
+                                    @error('dob')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
                             </div>
                         <div class="mt-4 pt-2">
                             <button type="submit" class="btn btn-custom-primary">Save Changes</button>
@@ -183,10 +164,13 @@
                                                         <div class="modal-body p-4">
                                                         <p>Are you sure you want to cancel this order? Please type your password to confirm your action.</p>
                                                         <input id="password" type="password" class="form-control" placeholder="*********" name="password" required>
+                                                        @error('password')
+                                                            <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                                        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                                                        <button type="submit" class="btn btn-danger">Confirm Cancelation</button>
                                                     </div>
                                                     </form>
                                                 </div>
@@ -211,15 +195,24 @@
                         <div class="row g-4">
                             <div class="col-12">
                                 <label class="form-label">Current Password</label>
-                                <input type="password" class="form-control" id="update_password_current_password" name="current_password">
+                                <input required type="password" class="form-control" id="update_password_current_password" name="current_password">
+                                @error('current_password')
+                                    <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">New Password</label>
-                                <input type="password" class="form-control" id="update_password_password" name="password">
+                                <input required type="password" class="form-control" id="update_password_password" name="password">
+                                @error('password')
+                                    <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" id="update_password_password_confirmation" name="password_confirmation">
+                                <input required type="password" class="form-control" id="update_password_password_confirmation" name="password_confirmation">
+                                @error('password_confirmation')
+                                    <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="mt-4 pt-2">
@@ -246,15 +239,36 @@
                                 <div class="row g-3">
                                 <div class="col-3">
                                     <input type="text" id="Name" name="Name" class="form-control" placeholder="Address Name" value="{{ old('Name') }}" required>
+                                    @error('Name')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="col-9">
                                     <input type="text" id="StreetAddress" name="StreetAddress" class="form-control" placeholder="Street Address" value="{{ old('StreetAddress') }}" required>
+                                    @error('StreetAddress')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
                                 </div>
-                                <div class="col-md-6"><input type="text" id="City" name="City" class="form-control" placeholder="City" value="{{ old('City') }}" required></div>
-                                <div class="col-md-3"><input type="text" id="State" name="State" class="form-control" placeholder="State" value="{{ old('State') }}" required></div>
-                                <div class="col-md-3"><input type="number" id="PostalCode" name="PostalCode" class="form-control" placeholder="Postal Code" value="{{ old('PostalCode') }}" required></div>
+                                <div class="col-md-6">
+                                    <input type="text" id="City" name="City" class="form-control" placeholder="City" value="{{ old('City') }}" required>
+                                    @error('City')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" id="State" name="State" class="form-control" placeholder="State" value="{{ old('State') }}" required>
+                                    @error('State')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" id="PostalCode" name="PostalCode" class="form-control" placeholder="Postal Code" value="{{ old('PostalCode') }}" required>
+                                    @error('PostalCode')
+                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                    @enderror
+                                </div>
                                 <div class="col-12">
-                                    <button onclick="event.preventDefault(); this.closest('form').submit();" class="btn btn-custom-primary btn-sm">Add Address</button>
+                                    <button type="submit" class="btn btn-custom-primary btn-sm">Add Address</button>
                                 </div>
                             </div>
                             </form>
@@ -301,11 +315,36 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="row g-2">
-                                                <div class="col-3"><input type="text" class="form-control form-control-sm" required name="Name" value="{{ $address->Name }}"></div>
-                                                <div class="col-9"><input type="text" class="form-control form-control-sm" required name="StreetAddress" value="{{ $address->StreetAddress }}"></div>
-                                                <div class="col-md-6"><input type="text" class="form-control form-control-sm" required name="City" value="{{ $address->City }}"></div>
-                                                <div class="col-md-3"><input type="text" class="form-control form-control-sm" required name="State" value="{{ $address->State }}"></div>
-                                                <div class="col-md-3"><input type="text" class="form-control form-control-sm" required name="PostalCode" value="{{ $address->PostalCode }}"></div>
+                                                <div class="col-3">
+                                                    <input type="text" class="form-control form-control-sm" required name="Name" value="{{ $address->Name }}">
+                                                    @error('Name')
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-9">
+                                                    <input type="text" class="form-control form-control-sm" required name="StreetAddress" value="{{ $address->StreetAddress }}">
+                                                    @error('StreetAddress')
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control form-control-sm" required name="City" value="{{ $address->City }}">
+                                                    @error('City')
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control form-control-sm" required name="State" value="{{ $address->State }}">
+                                                    @error('State')
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control form-control-sm" required name="PostalCode" value="{{ $address->PostalCode }}">
+                                                    @error('PostalCode')
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                                    @enderror
+                                                </div>
                                                 <div class="col-12 text-end mt-2">
                                                     <button type="submit" class="btn btn-custom-primary btn-sm">Save Changes</button>
                                                 </div>
@@ -330,6 +369,9 @@
                                         <div class="modal-body p-4">
                                         <p>Are you sure you want to delete this address? Please type your password to confirm your action.</p>
                                         <input id="password" type="password" class="form-control" placeholder="*********" name="password" required>
+                                                    @error('password')
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                                    @enderror
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
@@ -375,6 +417,9 @@
                     <div class="modal-body p-4">
                     <p>Are you sure you want to leave us? Please type your password to confirm account deletion.</p>
                     <input id="password" type="password" class="form-control" placeholder="*********" name="password" required>
+                                                    @error('password')
+                                                        <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                                                    @enderror
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>

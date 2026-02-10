@@ -9,7 +9,7 @@ use App\Http\Controllers\UserAddressController;
 
 
 
-Route::get('/Products', [ProductController::class, 'index']);
+Route::get('/Products', [ProductController::class, 'index'])->name('Products');
 Route::get('/Product/{id}', [ProductController::class, 'show'])->name('product details');
 Route::get('/cart', [CartItemController::class, 'index'])->name('cart');
 

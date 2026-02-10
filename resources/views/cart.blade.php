@@ -56,14 +56,15 @@
             <!-- Right Side: Checkout Info -->
             <div class="col-lg-4">
                 <div class="summary-card">
-                    <h5 class="fw-bold mb-4" style="color: var(--navy-text);">Order Summary</h5>
+                    @if (count($addresses) > 0)
+                        <h5 class="fw-bold mb-4" style="color: var(--navy-text);">Order Summary</h5>
                     
                     <!-- User Info Section -->
                     <div class="mb-4">
                         <label class="form-label small fw-bold">Contact Details</label>
                         <p class="mb-1 small">{{auth()->user()->fname}} {{auth()->user()->lname}}</p>
                         <p class="mb-0 small">{{auth()->user()->email}}</p>
-                        <p class="mb-0 small">{{auth()->user()->PhoneNumber}}</p>
+                        <p class="mb-0 small">0{{auth()->user()->PhoneNumber}}</p>
                     </div>
 
                     <!-- Address Selection -->
@@ -80,14 +81,6 @@
                                 <p class="mb-0 x-small text-muted" style="font-size: 0.75rem;">{{$address->City}}, {{$address->State}} | {{$address->PostalCode}}</p>
                             </div>
                         @endforeach
-                        {{-- <div class="address-selector selected" onclick="selectAddress(this)">
-                            <p class="mb-0 fw-bold small">Home (Default)</p>
-                            <p class="mb-0 x-small text-muted" style="font-size: 0.75rem;">123 Silicon Valley Blvd, San Francisco, CA</p>
-                        </div>
-                        <div class="address-selector" onclick="selectAddress(this)">
-                            <p class="mb-0 fw-bold small">Work Office</p>
-                            <p class="mb-0 x-small text-muted" style="font-size: 0.75rem;">456 Corporate Towers, New York, NY</p>
-                        </div> --}}
                     </div>
 
                     <!-- Payment Summary -->
@@ -107,6 +100,9 @@
                     </div>
 
                     <button type="button" class="btn-order shadow" onclick="placeOrder()">Place Order</button>
+                    @else
+                        <h4><a class="text-decoration-none" href="/user?section=addresses">Add an address</a> to place your order.</h4>
+                    @endif
                 </div>
             </div>
         </div>

@@ -17,6 +17,7 @@ class CartItemController extends Controller
             'cartItems' => $cartItems,
             'addresses' => $addresses
         ]);
+        
 
     }
 
@@ -38,7 +39,7 @@ class CartItemController extends Controller
 
         $cartItems = CartItem::where('user_id', auth()->id())->get();
         config(['cartItems' => $cartItems]);
-        return redirect()->route('cart');
+        return redirect()->route('Products');
 
         
     }

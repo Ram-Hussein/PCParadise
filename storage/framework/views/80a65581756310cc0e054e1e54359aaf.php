@@ -55,14 +55,15 @@
             <!-- Right Side: Checkout Info -->
             <div class="col-lg-4">
                 <div class="summary-card">
-                    <h5 class="fw-bold mb-4" style="color: var(--navy-text);">Order Summary</h5>
+                    <?php if(count($addresses) > 0): ?>
+                        <h5 class="fw-bold mb-4" style="color: var(--navy-text);">Order Summary</h5>
                     
                     <!-- User Info Section -->
                     <div class="mb-4">
                         <label class="form-label small fw-bold">Contact Details</label>
                         <p class="mb-1 small"><?php echo e(auth()->user()->fname); ?> <?php echo e(auth()->user()->lname); ?></p>
                         <p class="mb-0 small"><?php echo e(auth()->user()->email); ?></p>
-                        <p class="mb-0 small"><?php echo e(auth()->user()->PhoneNumber); ?></p>
+                        <p class="mb-0 small">0<?php echo e(auth()->user()->PhoneNumber); ?></p>
                     </div>
 
                     <!-- Address Selection -->
@@ -86,7 +87,6 @@ unset($__errorArgs, $__bag); ?>
                                 <p class="mb-0 x-small text-muted" style="font-size: 0.75rem;"><?php echo e($address->City); ?>, <?php echo e($address->State); ?> | <?php echo e($address->PostalCode); ?></p>
                             </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        
                     </div>
 
                     <!-- Payment Summary -->
@@ -106,6 +106,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <button type="button" class="btn-order shadow" onclick="placeOrder()">Place Order</button>
+                    <?php else: ?>
+                        <h4><a class="text-decoration-none" href="/user?section=addresses">Add an address</a> to place your order.</h4>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

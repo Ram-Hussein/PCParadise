@@ -14,7 +14,10 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
                         <label for="loginKey">Please enter your email</label>
-                        <div class="invalid-feedback">Please enter your email or username.</div>
+                        <div class="invalid-feedback">Please enter your email.</div>
+                        @error('email')
+                            <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Password -->
@@ -22,6 +25,9 @@
                         <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
                         <label for="password">Password</label>
                         <div class="invalid-feedback">Please enter your password.</div>
+                        @error('password')
+                            <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <!-- Options -->
