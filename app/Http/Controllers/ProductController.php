@@ -12,7 +12,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $products = Product::all();
-        return view('products', [
+        return view('product.products', [
             'categories' => $categories,
             'products' => $products,
         ]);
@@ -26,7 +26,7 @@ class ProductController extends Controller
                                     ->take(4)
                                     ->get();
         $specs = ProductSpec::where('product_id', $product->id)->get();
-        return view('product_details', [
+        return view('product.product_details', [
             'product' => $product,
             'similarProducts' => $similarProducts,
             'specs' => $specs,

@@ -41,15 +41,13 @@
               <ul style="background-color: #6a5b6e;" class="dropdown-menu">
                 <?php $__currentLoopData = DB::table('categories')->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <li><a href="/Products?category=<?php echo e($category->name); ?>" style="color: beige;" class="dropdown-item"><?php echo e($category->name); ?></a></li>
-                  
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                
                 <li><hr class="dropdown-divider"></li>
                 <li><a href="/Products" style="color: beige;" class="dropdown-item">All Products</a></li>
               </ul>
             </li>
             <li class="nav-item ms-2">
-              <a class="nav-link" href="/Sell">Sell your Product</a>
+              <a class="nav-link" href="<?php echo e(route('sell_product')); ?>">Sell your Product</a>
             </li>
           </ul>
           <?php if(auth()->guard()->check()): ?>
@@ -61,7 +59,10 @@
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i style="color: beige;" class="fas fa-user"> <?php echo e(Auth::user()->fname); ?></i></a>
                 <ul style="background-color: #6a5b6e;" class="dropdown-menu">
-                  <li><a href="/user" style="color: beige;" class="dropdown-item">Profile</a></li>
+                  <?php if(auth()->user()->is_admin): ?>
+                      <li><a href="<?php echo e(route('dashboard')); ?>" style="color: beige;" class="dropdown-item">Dashboard</a></li>
+                  <?php endif; ?>
+                  <li><a href="<?php echo e(route('profile.index')); ?>" style="color: beige;" class="dropdown-item">Profile</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
                     <form method="POST" action="<?php echo e(route('logout')); ?>">
@@ -72,15 +73,11 @@
                 </ul>
                 </li>
               </ul>
-
-
-
-
           </div>
           <?php endif; ?>
           <?php if(auth()->guard()->guest()): ?>
             <div class="d-flex nav-icons">
-              <a class="nav-link" href="/SignIn">Sign in</a>
+              <a class="nav-link" href="<?php echo e(route('login')); ?>">Sign in</a>
           </div>
           <?php endif; ?>
           
@@ -124,6 +121,13 @@
     <script
       src="<?php echo e(asset('Bootstrap/js/bootstrap.bundle.min.js')); ?>"
     ></script>
+    <?php if(session('Error')): ?>
+    <script>
+        window.onload = function() {
+            alert("<?php echo e(session('Error')); ?>");
+        };
+    </script>
+    <?php endif; ?>
   </body>
 </html>
 <?php /**PATH C:\Users\RamsX\OneDrive\Desktop\Ram\Projects\Laravel Projects\PCParadise\resources\views/components/layout.blade.php ENDPATH**/ ?>

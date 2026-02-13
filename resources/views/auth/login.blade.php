@@ -1,47 +1,73 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('Components.layout')
+@section('content')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<section class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h3>Welcome Back!</h3>
+                <p class="mb-0 text-white-50">Please sign in to your account.</p>
+            </div>
+            <div class="auth-body">
+                <form id="signinForm" method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <!-- Username or Email -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
+                        <label for="loginKey">Please enter your email</label>
+                        <div class="invalid-feedback">Please enter your email.</div>
+                        @error('email')
+                            <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                        @enderror
+                    </div>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    <!-- Password -->
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                        <div class="invalid-feedback">Please enter your password.</div>
+                        @error('password')
+                            <p class="text-danger fs-6 fw-semibold ms-2">-{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Options -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="remember" id="rememberMe">
+                            <label class="form-check-label text-muted small" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="{{ route('password.request') }}" class="small text-decoration-none" style="color: navy;">Forgot Password?</a>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-auth">Sign In</button>
+                    
+                    <!-- Switch to Sign Up -->
+                    <div class="auth-footer">
+                        Don't have an account? <a href="{{ route('register') }}">Create Account</a>
+                    </div>
+                </form>
+            </div>
         </div>
+    </section>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+@endsection
+{{-- @section('script')
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+<script>
+        // Simple form validation visual feedback
+        const form = document.getElementById('signinForm');
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                event.preventDefault(); // Prevent actual submission
+                alert("Sign in successful! (Demo)");
+                // In real app: window.location.href = 'main.html';
+            }
+            form.classList.add('was-validated');
+        });
+    </script>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+@endsection --}}

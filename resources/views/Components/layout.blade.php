@@ -41,19 +41,13 @@
               <ul style="background-color: #6a5b6e;" class="dropdown-menu">
                 @foreach (DB::table('categories')->get() as $category)
                   <li><a href="/Products?category={{ $category->name }}" style="color: beige;" class="dropdown-item">{{ $category->name }}</a></li>
-                  
                 @endforeach
-                {{-- <li><a href="/Products?category=GPU" style="color: beige;" class="dropdown-item">Graphics Cards</a></li>
-                <li><a href="/Products?category=CPU" style="color: beige;" class="dropdown-item">Processors</a></li>
-                <li><a href="/Products?category=RAM" style="color: beige;" class="dropdown-item">Memory (RAM)</a></li>
-                <li><a href="/Products?category=Motherboard" style="color: beige;" class="dropdown-item">Motherboards</a></li>
-                <li><a href="/Products?category=Peripherals" style="color: beige;" class="dropdown-item">Peripherals</a></li> --}}
                 <li><hr class="dropdown-divider"></li>
                 <li><a href="/Products" style="color: beige;" class="dropdown-item">All Products</a></li>
               </ul>
             </li>
             <li class="nav-item ms-2">
-              <a class="nav-link" href="/Sell">Sell your Product</a>
+              <a class="nav-link" href="{{ route('sell_product') }}">Sell your Product</a>
             </li>
           </ul>
           @auth
@@ -65,7 +59,10 @@
                 <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i style="color: beige;" class="fas fa-user"> {{ Auth::user()->fname }}</i></a>
                 <ul style="background-color: #6a5b6e;" class="dropdown-menu">
-                  <li><a href="/user" style="color: beige;" class="dropdown-item">Profile</a></li>
+                  @if (auth()->user()->is_admin)
+                      <li><a href="{{ route('dashboard') }}" style="color: beige;" class="dropdown-item">Dashboard</a></li>
+                  @endif
+                  <li><a href="{{ route('profile.index') }}" style="color: beige;" class="dropdown-item">Profile</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
                     <form method="POST" action="{{ route('logout') }}">
@@ -76,15 +73,11 @@
                 </ul>
                 </li>
               </ul>
-
-
-
-
           </div>
           @endauth
           @guest
             <div class="d-flex nav-icons">
-              <a class="nav-link" href="/SignIn">Sign in</a>
+              <a class="nav-link" href="{{ route('login') }}">Sign in</a>
           </div>
           @endguest
           
@@ -128,5 +121,12 @@
     <script
       src="{{ asset('Bootstrap/js/bootstrap.bundle.min.js') }}"
     ></script>
+    @if (session('Error'))
+    <script>
+        window.onload = function() {
+            alert("{{ session('Error') }}");
+        };
+    </script>
+    @endif
   </body>
 </html>

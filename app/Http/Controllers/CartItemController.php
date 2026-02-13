@@ -13,7 +13,7 @@ class CartItemController extends Controller
     public function index(){
         $cartItems = CartItem::where('user_id' , auth()->user()->id)->get();
         $addresses = Auth::user()->addresses;
-        return view('cart' , [
+        return view('profile.cart' , [
             'cartItems' => $cartItems,
             'addresses' => $addresses
         ]);
@@ -36,9 +36,6 @@ class CartItemController extends Controller
             'product_id' => $validated['product_id'],
             'quantity' => $validated['quantity'],
         ]);
-
-        $cartItems = CartItem::where('user_id', auth()->id())->get();
-        config(['cartItems' => $cartItems]);
         return redirect()->route('Products');
 
         

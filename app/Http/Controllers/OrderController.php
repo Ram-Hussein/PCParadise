@@ -22,10 +22,6 @@ class OrderController extends Controller
             'items.*' => 'required|numeric|exists:cart_items,id',
             'total' => 'required|numeric'
         ]);
-        /* $items = $request->items;
-        foreach($items as $item){
-            dd(gettype($item));
-        } */
         $subTotal = 0;
         foreach($request->product as $product){
             $price = Product::where('id' , $product['id'])->value('price');
@@ -64,32 +60,62 @@ class OrderController extends Controller
             return redirect('/user?section=my-orders');
         }
         }
+        public function update(Request $request , $id)
+        {
+            if(Auth::user()->is_admin){
+                $order = Order::find($id);
+                if($order){
+                    switch($request->status){
+                        case "Confirm":
+                            $order->status->update([
+                                'status' => 'Confirmed',
+                                'description' => 'Your order has been confirmed. Please wait while we pack it and ship it to your address.'
+                            ]);
+                            return redirect()->back();
+
+                        case "Complete":
+                            $order->status->update([
+                                'status' => 'Delivered',
+                                'description' => 'Check your front door! Thank you for using PCParadise'
+                            ]);
+                            return redirect()->back();
+                    }
+                }
+            } else {
+                return redirect()->route('home')->with('Error' , "You do not have permission to complete this action.");
+            }
+        }
 
         public function destroy(Request $request ,$id)
     {
-        $pass = $request->validate([
-            'password' => 'required|current_password'
-        ]);
-        $order = Order::find($id);
-        if(!$order){
-            return redirect()->back()->with('notfound',"Not Found");
-        } elseif($order->user_id != Auth::user()->id){
-            return redirect()->back()->with('unauthorized',"Unauthorized Action");
-        }
-        if(!Auth::user()->is_admin){
+        if(Auth::user()->is_admin){
+            $order = Order::find($id);
+            if(!$order){
+                return redirect()->back()->with('Error',"Order Not Found");
+            }
+            $order->status->update([
+                'status' => 'Cancelled',
+                'description' => 'Order Cancelled by Admin'
+            ]);
+            return redirect()->back();
+        } elseif (!Auth::user()->is_admin){
+            $pass = $request->validate([
+                'password' => 'required|current_password'
+            ]);
+            $order = Order::find($id);
+            if(!$order){
+                return redirect()->back()->with('notfound',"Not Found");
+            } elseif($order->user_id != Auth::user()->id){
+                return redirect()->back()->with('Error' , "You do not have permission to complete this action.");
+            }
             $order->status->update([
                 'status' => 'Cancelled',
                 'description' => 'Order Cancelled by user'
             ]);
             return redirect()->back();
         }
-        if(Auth::user()->is_admin){
-            $order->status->update([
-                'status' => 'Cancelled',
-                'description' => 'Order Cancelled by Admin'
-            ]);
-            return redirect()->back();
-        }
+        
+        
         
 
     }

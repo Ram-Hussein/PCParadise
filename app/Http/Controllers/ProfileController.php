@@ -18,11 +18,8 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+    public function index(){
+        return view('profile.user');
     }
 
     /**
@@ -30,34 +27,49 @@ class ProfileController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        /* $request->user()->fill($request->validated());
+        if(Auth::user()->is_admin){
+            $user = User::find($request->user_id);
+            $request->validate([
+            'fname' => ['alpha', 'max:255'],
+            'lname' => ['alpha', 'max:255'],
+            'email' => ['string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'dob' => ['date', 'before:' . Carbon::now()->subYears(18)->format('Y-m-d')],
+            'country' => ['exists:countries,id'],
+            'PhoneNumber' => ['numeric', ],
+            ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+            $user->update([
+                'fname' => $request->fname,
+                'lname' => $request->lname,
+                'email' => $request->email,
+                'date_of_birth' => $request->dob,
+                'country_id' => $request->country,
+                'PhoneNumber' => $request->PhoneNumber,
+            ]);
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated'); */
-        $request->validate([
+            return redirect()->back();
+        } else {
+            $request->validate([
             'fname' => ['alpha', 'max:255'],
             'lname' => ['alpha', 'max:255'],
             'email' => ['string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
             'dob' => ['date', 'before:' . Carbon::now()->subYears(18)->format('Y-m-d')],
             'country' => ['exists:countries,id'],
             'PhoneNumber' => ['numeric', ],
-        ]);
+            ]);
 
-        Auth::user()->update([
-            'fname' => $request->fname,
-            'lname' => $request->lname,
-            'email' => $request->email,
-            'date_of_birth' => $request->dob,
-            'country_id' => $request->country,
-            'PhoneNumber' => $request->PhoneNumber,
-        ]);
+            Auth::user()->update([
+                'fname' => $request->fname,
+                'lname' => $request->lname,
+                'email' => $request->email,
+                'date_of_birth' => $request->dob,
+                'country_id' => $request->country,
+                'PhoneNumber' => $request->PhoneNumber,
+            ]);
 
-        dd($request->all());
+            return redirect()->back();
+        }
+        
 
 
     }
